@@ -1,0 +1,52 @@
+.liked-feedback,
+.unliked-feedback {
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 50em;
+  line-height: 0;
+  opacity: 0;
+  transform-origin: 50%;
+}
+
+.liked-feedback {
+  color: @pink-color;
+  transform: translateX(-50%) translateY(-50%) scale(.1);
+
+  &.animate {
+    animation: like 600ms @out;
+  }
+}
+
+.unliked-feedback {
+  color: @dark-color;
+  transform: translateX(-50%) translateY(-50%) scale(.8);
+
+  &.animate {
+    animation: unlike 600ms @out;
+  }
+}
+
+@keyframes like {
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(-50%) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes unlike {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    transform: translateX(-50%) translateY(-50%) scale(.8);
+  }
+  100% {
+    transform: translateX(-50%) translateY(-50%) scale(.7);
+    opacity: 0;
+  }
+}

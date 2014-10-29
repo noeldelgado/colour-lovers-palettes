@@ -1,0 +1,31 @@
+.clearfix {
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.cl-clean-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cl-inline-list {
+  > li {
+    display: inline-block;
+  }
+}
+
+.cl-hide {
+  display: none !important;
+}

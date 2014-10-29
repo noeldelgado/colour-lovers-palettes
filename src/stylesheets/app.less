@@ -1,0 +1,57 @@
+@import '_variables';
+@import '_utilities';
+@import '_easings';
+
+@import 'fonts';
+@import 'loader';
+@import 'btn';
+@import 'badge';
+@import 'tooltip';
+
+@import '/src/scripts/directives/palette/palette';
+@import '/src/scripts/directives/palette-info/palette-info';
+@import '/src/scripts/directives/saved-palettes/saved-palettes';
+@import '/src/scripts/directives/info/info';
+@import '/src/scripts/directives/liked-feedback/liked-feedback';
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-flow: column wrap;
+  font-size: 14px;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: @dark-color;
+  background-color: #fff;
+}
+
+a {
+  color: @link-color;
+  text-decoration: none;
+  transition: color 200ms;
+
+  &:hover {
+    color: lighten(@link-color, 15%);
+    text-decoration: underline;
+  }
+}
+
+::selection {
+  background-color: rgba(0,0,0,.1);
+}
+
+footer {
+  position: relative;
+}

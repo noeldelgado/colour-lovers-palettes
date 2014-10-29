@@ -1,0 +1,45 @@
+<div class="palette-info clearfix">
+  <div class="pull-left">
+    <p class="title">{{infoData.title}}</p>
+    <p class="username">by {{infoData.userName}}</p>
+  </div>
+  <div class="pull-right controls">
+    <ul class="cl-clean-list cl-inline-list">
+      <li class="cl-has-tooltip">
+        <button class="cl-icon-btn entypo toggle-info-button">&#8505;</button>
+        <span class="cl-tooltip">Info</span>
+      </li>
+      <li class="cl-has-tooltip">
+        <a href="https://github.com/noeldelgado/colour-lovers-palettes" target="_blank" class="cl-icon-btn entypo-social">&#62208;</a>
+        <span class="cl-tooltip">Fork me on Github</span>
+      </li>
+      <li>
+        <span class="divider"></span>
+      </li>
+      <li class="cl-has-tooltip">
+        <button class="cl-icon-btn entypo toggle-saved-palettes-button">&#57349;</button>
+        <span class="cl-badge">{{savedPalettes.length}}</span>
+        <span class="cl-tooltip">Liked Palettes</span>
+      </li>
+      <li>
+        <span class="divider"></span>
+      </li>
+      <li class="cl-has-tooltip" ng-class="{'cl-hide': savedPalettes.indexOf(infoData) >= 0}">
+        <button class="cl-icon-btn entypo save-palette-button"
+          ng-click="likePalette(infoData)">&#9825;</button>
+        <span class="cl-tooltip">Like Palette</span>
+      </li>
+      <li class="cl-has-tooltip" ng-class="{'cl-hide': savedPalettes.indexOf(infoData) < 0}">
+        <button class="cl-icon-btn entypo saved-palette-button"
+          ng-click="unlikePalette(infoData)">&hearts;</button>
+        <span class="cl-tooltip">Unlike Palette</span>
+      </li>
+      <li class="cl-has-tooltip">
+        <button class="cl-icon-btn entypo show-random-palette-button"
+          ng-click="randomPalette()">&#128256;</button>
+        <span class=" cl-tooltip cl-tooltip--top-left">Load Random Palette</span>
+      </li>
+    </ul>
+  </div>
+</div>
+

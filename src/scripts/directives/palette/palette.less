@@ -1,0 +1,63 @@
+.palette {
+  flex: 1;
+  display: flex;
+
+  ul {
+    flex: 1 100%;
+    display: flex;
+    flex-flow: row wrap;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  li {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: all 400ms @ease-in-out-back;
+
+    &:hover {
+      flex: 2;
+
+      .color-values {
+        opacity: .5;
+      }
+    }
+
+    &.dark {
+      input {
+        color: #fff;
+      }
+    }
+
+    .color-values {
+      opacity: 0;
+      transition: opacity 450ms @ease-in-out-expo;
+
+      input {
+        font-size: 1.2em;
+        display: block;
+        font-family: inherit;
+        font-weight: 600;
+        text-align: center;
+        outline: none;
+        background-color: transparent;
+        border: none;
+        padding: .1em 0;
+      }
+    }
+  }
+
+  @media all and (max-width: 700px) {
+    ul {
+      flex-flow: column wrap;
+    }
+    li {
+      flex: 1 100%;
+    }
+  }
+}
+

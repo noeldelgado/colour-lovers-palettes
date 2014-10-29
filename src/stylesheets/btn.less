@@ -1,0 +1,38 @@
+.cl-btn {
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+  border: 1px solid darken(@link-color, 10%);
+  background-color: #fff;
+  color: @link-color;
+  border-radius: .25em;
+}
+
+.cl-icon-btn {
+  font-size: 2em;
+  line-height: 25px;
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  text-align: center;
+  border-radius: 50%;
+  background-color: darken(#fff, 0%);
+  color: darken(#fff, 60%);
+  transition: all 180ms;
+
+  &:hover {
+    color: darken(#fff, 80%);
+    background-color: darken(#fff, 2%);
+    text-decoration: none;
+  }
+
+  &.active {
+    color: darken(#fff, 40%);
+    background-color: darken(#fff, 8%);
+    box-shadow: 0 0 0 2px darken(#fff, 8%);
+  }
+}

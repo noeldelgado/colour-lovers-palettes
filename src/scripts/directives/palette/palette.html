@@ -1,0 +1,10 @@
+<ul>
+  <li ng-repeat="color in colors"
+      class="{{color | colorContrast}}"
+      style="background-color: #{{color}}">
+    <div class="color-values">
+      <input value="#{{color}}" on-click-focus/>
+      <input value="{{color | hexToRgba}}" on-click-focus/>
+    </div>
+  </li>
+</ul>

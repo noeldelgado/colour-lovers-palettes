@@ -1,0 +1,15 @@
+<div class="empty-collection" ng-if="!palettes.length">
+  <p>No saved palettes found. Click the "heart" right below to save this palette.</p>
+  <p>We will use localStorage to save your palettes.</p>
+</div>
+<ul>
+  <li ng-repeat="palette in palettes">
+    <p class="title">{{palette.title}}</p>
+    <div class="saved-palette" ng-click="loadPalette(palette)">
+      <div ng-repeat="color in palette.colors"
+        style="background-color: #{{color}}">
+      </div>
+    </div>
+  </li>
+</ul>
+
