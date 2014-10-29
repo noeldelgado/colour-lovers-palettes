@@ -18,7 +18,18 @@ angular.module("App", [ "ngAnimate", "LocalStorageModule" ]).config([ "$animateP
             url: url
         });
     }, exports;
-}), angular.module("App").controller("AppController", [ "$scope", "localStorageService", "ColourLoversApi", "$animate", function($scope, localStorageService, ColourLoversApi) {
+}), angular.module("App").factory("Utils", function() {
+    var Utils = {};
+    return Utils.hexToRgb = function(color) {
+        var r, g, b;
+        return r = parseInt(color.slice(0, 2), 16), g = parseInt(color.slice(2, 4), 16), 
+        b = parseInt(color.slice(4, 6), 16), {
+            r: r,
+            g: g,
+            b: b
+        };
+    }, Utils;
+}), angular.module("App").controller("AppController", [ "$scope", "localStorageService", "ColourLoversApi", function($scope, localStorageService, ColourLoversApi) {
     $scope.data = null, $scope.savedPalettesData = null, $scope.loading = !0, $scope.$on("loadPalette", function(event, palette) {
         $scope.loadPalette(palette);
     }), $scope.$on("randomPalette", function() {
@@ -62,38 +73,21 @@ angular.module("App", [ "ngAnimate", "LocalStorageModule" ]).config([ "$animateP
         $scope.$broadcast("unliked", paletteData);
     }, $scope.randomPalette(), localStorageService.get("Palettes") ? $scope.savedPalettesData = localStorageService.get("Palettes") : (localStorageService.set("Palettes", []), 
     $scope.savedPalettesData = []);
-} ]), angular.module("App").filter("colorContrast", function() {
-    var hexToRgb = function(color) {
-        var r, g, b;
-        return r = parseInt(color.slice(0, 2), 16), g = parseInt(color.slice(2, 4), 16), 
-        b = parseInt(color.slice(4, 6), 16), {
-            r: r,
-            g: g,
-            b: b
-        };
-    }, getBrightness = function(rgb) {
+} ]), angular.module("App").filter("colorContrast", [ "Utils", function(Utils) {
+    var getBrightness = function(rgb) {
         var sum = rgb.r + rgb.g + rgb.b;
         return Math.round(sum / 765 * 100);
     };
     return function(color) {
-        var rgb = hexToRgb(color), brightness = getBrightness(rgb);
+        var rgb = Utils.hexToRgb(color), brightness = getBrightness(rgb);
         return 50 > brightness ? "dark" : "";
     };
-}), angular.module("App").filter("hexToRgba", function() {
-    var hexToRgb = function(color) {
-        var r, g, b;
-        return r = parseInt(color.slice(0, 2), 16), g = parseInt(color.slice(2, 4), 16), 
-        b = parseInt(color.slice(4, 6), 16), {
-            r: r,
-            g: g,
-            b: b
-        };
-    };
+} ]), angular.module("App").filter("hexToRgba", [ "Utils", function(Utils) {
     return function(color) {
-        var rgb = hexToRgb(color);
+        var rgb = Utils.hexToRgb(color);
         return "rgba(" + rgb.r + ", " + rgb.g + ", " + rgb.b + ", 1)";
     };
-}), angular.module("App").directive("info", function() {
+} ]), angular.module("App").directive("info", function() {
     return {
         restrict: "E",
         templateUrl: "src/scripts/directives/info/info.html",
@@ -123,25 +117,7 @@ angular.module("App", [ "ngAnimate", "LocalStorageModule" ]).config([ "$animateP
             });
         }
     };
-} ]), angular.module("App").directive("onClickFocus", function() {
-    return {
-        restrict: "A",
-        scope: {},
-        link: function($scope, $element) {
-            $element.bind("click", function() {
-                $element[0].select();
-            });
-        }
-    };
-}), angular.module("App").directive("palette", function() {
-    return {
-        restrict: "E",
-        scope: {
-            colors: "="
-        },
-        templateUrl: "src/scripts/directives/palette/palette.html"
-    };
-}), angular.module("App").directive("paletteInfo", [ "$rootScope", function($rootScope) {
+} ]), angular.module("App").directive("paletteInfo", [ "$rootScope", function($rootScope) {
     return {
         restrict: "E",
         scope: {
@@ -183,5 +159,23 @@ angular.module("App", [ "ngAnimate", "LocalStorageModule" ]).config([ "$animateP
                 elem.removeClass("active");
             });
         }
+    };
+}), angular.module("App").directive("onClickFocus", function() {
+    return {
+        restrict: "A",
+        scope: {},
+        link: function($scope, $element) {
+            $element.bind("click", function() {
+                $element[0].select();
+            });
+        }
+    };
+}), angular.module("App").directive("palette", function() {
+    return {
+        restrict: "E",
+        scope: {
+            colors: "="
+        },
+        templateUrl: "src/scripts/directives/palette/palette.html"
     };
 });
