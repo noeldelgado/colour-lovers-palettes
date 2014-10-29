@@ -4,7 +4,7 @@
 </div>
 <ul>
   <li ng-repeat="palette in palettes">
-    <p class="title">{{palette.title}}</p>
+    <p class="title">{{palette.title | untitled}}</p>
     <div class="saved-palette" ng-click="loadPalette(palette)">
       <div ng-repeat="color in palette.colors"
         style="background-color: #{{color}}">
