@@ -29,10 +29,10 @@ gulp.task('js', function() {
         .pipe(uglify('app.js', {
             mangle : false,
             output : {
-                beautify : true
+                beautify : false
             },
             compress : {
-                drop_debugger : false
+                drop_debugger : true
             }
         }))
         .pipe(gulp.dest('dist/'));
