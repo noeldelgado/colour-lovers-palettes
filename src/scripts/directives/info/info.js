@@ -3,7 +3,7 @@ angular.module('App').directive('info', function() {
         restrict : 'E',
         templateUrl : 'src/scripts/directives/info/info.html',
         link : function(scope, elem) {
-            scope.$on('toggleInfo', function(event) {
+            scope.$on('toggleInfo', function() {
                 elem.toggleClass('active');
                 scope.$broadcast('hideSavedPalettes');
             });

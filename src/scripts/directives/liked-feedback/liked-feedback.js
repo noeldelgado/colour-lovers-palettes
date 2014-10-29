@@ -8,13 +8,13 @@ angular.module('App').directive('likedFeedback', ['$animate', function($animate)
             likedElement = $elem[0].querySelector('.liked-feedback');
             unlikedElement = $elem[0].querySelector('.unliked-feedback');
 
-            $scope.$on('liked', function(event) {
+            $scope.$on('liked', function() {
                 $animate.addClass(likedElement, 'animate').then(function() {
                     likedElement.classList.remove('animate');
                 });
             });
 
-            $scope.$on('unliked', function(event) {
+            $scope.$on('unliked', function() {
                 $animate.addClass(unlikedElement, 'animate').then(function() {
                     unlikedElement.classList.remove('animate');
                 });

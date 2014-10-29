@@ -1,6 +1,6 @@
 angular.module('App').controller('AppController', [
-        '$scope', 'localStorageService', 'ColourLoversApi', '$animate',
-function($scope,   localStorageService,   ColourLoversApi, $animate) {
+        '$scope', 'localStorageService', 'ColourLoversApi',
+function($scope,   localStorageService,   ColourLoversApi) {
     $scope.data = null;
     $scope.savedPalettesData = null;
     $scope.loading = true;
