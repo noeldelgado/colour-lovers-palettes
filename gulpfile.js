@@ -24,21 +24,29 @@ gulp.task('less', function() {
         .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('js', function() {
+gulp.task('js:dev', function() {
     gulp.src(jsAppFiles)
         .pipe(uglify('app.js', {
             mangle : false,
             output : {
-                beautify : false
+                beautify : true
             },
             compress : {
-                drop_debugger : true
+                drop_debugger : false
             }
         }))
         .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('js-vendor', function() {
+gulp.task('js:dist', function() {
+    gulp.src(jsAppFiles)
+        .pipe(uglify('app.js', {
+            mangle : false
+        }))
+        .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('js:vendor', function() {
     gulp.src(jsVendorFiles)
         .pipe(uglify('vendors.js'))
         .pipe(gulp.dest('dist/'));
@@ -47,10 +55,11 @@ gulp.task('js-vendor', function() {
 gulp.task('watch', function() {
     livereload.listen();
     gulp.watch(['src/stylesheets/**', 'src/scripts/directives/**/*.less'], ['less']);
-    gulp.watch('src/scripts/**/*.js', ['js']);
+    gulp.watch('src/scripts/**/*.js', ['js:dev']);
     gulp.watch('**/*.html').on('change', livereload.changed);
     gulp.watch('dist/**').on('change', livereload.changed);
 });
 
-gulp.task('default', ['dist', 'watch']);
-gulp.task('dist', ['less', 'js-vendor', 'js']);
+gulp.task('default', ['dev', 'watch']);
+gulp.task('dev', ['less', 'js:vendor', 'js:dev']);
+gulp.task('dist', ['less', 'js:vendor', 'js:dist']);
