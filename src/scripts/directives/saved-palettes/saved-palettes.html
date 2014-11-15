@@ -3,7 +3,7 @@
   <p>We will use localStorage to save your palettes.</p>
 </div>
 <ul>
-  <li ng-repeat="palette in palettes">
+  <li ng-repeat="palette in palettes track by $index">
     <p class="title">{{palette.title | untitled}}</p>
     <div class="saved-palette" ng-click="loadPalette(palette)">
       <div ng-repeat="color in palette.colors"
