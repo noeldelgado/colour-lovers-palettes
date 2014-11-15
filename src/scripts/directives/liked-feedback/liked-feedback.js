@@ -2,11 +2,11 @@ angular.module('App').directive('likedFeedback', ['$animate', function($animate)
     return {
         restrict : 'E',
         templateUrl : 'src/scripts/directives/liked-feedback/liked-feedback.html',
-        link : function($scope, $elem) {
+        link : function($scope, $element) {
             var likedElement, unlikedElement;
 
-            likedElement = $elem[0].querySelector('.liked-feedback');
-            unlikedElement = $elem[0].querySelector('.unliked-feedback');
+            likedElement = $element[0].querySelector('.liked-feedback');
+            unlikedElement = $element[0].querySelector('.unliked-feedback');
 
             $scope.$on('liked', function() {
                 $animate.addClass(likedElement, 'animate').then(function() {
