@@ -5,17 +5,18 @@
   <title>COLOURLovers Palettes</title>
   <link rel="stylesheet" href="dist/app.css">
 </head>
-<body ng-app="App" ng-controller="AppController">
-  <palette colors="data.colors" class="palette"></palette>
+<body ng-app="App" ng-controller="AppController as appCtrl">
+  <palette colors="appCtrl.data.colors" class="palette"></palette>
   <footer>
-    <saved-palettes palettes="savedPalettesData" class="section-saved-palettes"></saved-palettes>
+    <saved-palettes palettes="appCtrl.savedPalettesData" class="section-saved-palettes"></saved-palettes>
     <info class="section-info"></info>
-    <palette-info info-data="data" saved-palettes="savedPalettesData"></palette-info>
+    <palette-info info-data="appCtrl.data" saved-palettes="appCtrl.savedPalettesData"></palette-info>
   </footer>
   <liked-feedback></liked-feedback>
-  <div ng-class="{hide: !loading}" class="loader">
+  <div ng-class="{hide: !appCtrl.loading}" class="loader">
     <span class="spinner"></span>
   </div>
+
   <script src="dist/vendors.js"></script>
   <script src="dist/app.js"></script>
 </body>

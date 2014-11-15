@@ -1,101 +1,83 @@
 angular.module('App').controller('AppController', [
         '$scope', 'localStorageService', 'ColourLoversApi',
 function($scope,   localStorageService,   ColourLoversApi) {
-    $scope.data = null;
-    $scope.savedPalettesData = null;
-    $scope.loading = true;
+    var appController = this;
 
-    $scope.$on('loadPalette', function(event, palette) {
-        $scope.loadPalette(palette);
-    });
+    appController.data = null;
+    appController.savedPalettesData = null;
+    appController.loading = true;
 
-    $scope.$on('randomPalette', function() {
-        $scope.randomPalette();
-    });
+    function loadPalette(palette) {
+        appController.data = palette;
+    }
 
-    $scope.$on('savePalette', function(event, palette) {
-        $scope.savePalette(palette);
-    });
+    function randomPalette() {
+        appController.loading = true;
 
-    $scope.$on('removePalette', function(event, palette) {
-        $scope.removePalette(palette);
-    });
-
-    $scope.loadPalette = function loadPalette(palette) {
-        $scope.data = palette;
-    };
-
-    $scope.randomPalette = function randomPalette() {
-        $scope.loading = true;
         ColourLoversApi.getRandomPalette().then(function(response) {
-            $scope.data = response.data[0];
-            $scope.loading = false;
+            loadPalette(response.data[0]);
+            appController.loading = false;
         }, function(error) {
-            $scope.loading = false;
-            console.log(error)
-        }, function(notify) {
-            console.log(notify)
+            appController.loading = false;
         });
-    };
+    }
 
-    $scope.randomPaletteByColor = function randomPaletteByColor(color) {
-        $scope.loading = true;
-        ColourLoversApi.getRandomPaletteByColor(color).then(function(response) {
-            var length = response.data.length,
-                randomChoice = Math.floor(Math.random() * length);
-
-            $scope.data = response.data[randomChoice];
-            $scope.loading = false;
-        }, function(error) {
-            $scope.loading = false;
-            console.log(error)
-        }, function(notify) {
-            console.log(notify)
-        });
-    };
-
-    $scope.savePalette = function savePalette(paletteData) {
+    function savePalette(paletteData) {
         var palettes = localStorageService.get('Palettes'),
             alreadyAdded = false;
 
         if (palettes) {
             alreadyAdded = palettes.some(function(palette) {
-                return paletteData.id === palette.id;
+                return (paletteData.id === palette.id);
             });
 
-            if (alreadyAdded) {
-                return false;
-            }
+            if (alreadyAdded) return;
 
             palettes.push(paletteData);
             localStorageService.set('Palettes', palettes);
-            $scope.savedPalettesData = palettes;
+            appController.savedPalettesData = palettes;
         } else {
             localStorageService.set('Palettes', [paletteData]);
-            $scope.savedPalettesData = [paletteData];
+            appController.savedPalettesData = [paletteData];
         }
 
-        $scope.loadPalette(paletteData);
+        loadPalette(paletteData);
         $scope.$broadcast('liked', paletteData);
-    };
+    }
 
-    $scope.removePalette = function removePalette(paletteData) {
-        $scope.savedPalettesData = $scope.savedPalettesData.filter(function(savedPalette) {
+    function removePalette(paletteData) {
+        appController.savedPalettesData = appController.savedPalettesData.filter(function(savedPalette) {
             return savedPalette.id !== paletteData.id;
         });
 
-        localStorageService.set('Palettes', $scope.savedPalettesData);
+        localStorageService.set('Palettes', appController.savedPalettesData);
 
-        $scope.loadPalette(paletteData);
+        loadPalette(paletteData);
         $scope.$broadcast('unliked', paletteData);
-    };;
-
-    $scope.randomPalette();
-
-    if (localStorageService.get('Palettes')) {
-        $scope.savedPalettesData = localStorageService.get('Palettes');
-    } else {
-        localStorageService.set('Palettes', []);
-        $scope.savedPalettesData = [];
     }
+
+    $scope.$on('loadPalette', function(event, palette) {
+        loadPalette(palette);
+    });
+
+    $scope.$on('randomPalette', randomPalette);
+
+    $scope.$on('savePalette', function(event, palette) {
+        savePalette(palette);
+    });
+
+    $scope.$on('removePalette', function(event, palette) {
+        removePalette(palette);
+    });
+
+    (function resolve() {
+        randomPalette();
+
+        if (localStorageService.get('Palettes')) {
+            appController.savedPalettesData = localStorageService.get('Palettes');
+        } else {
+            localStorageService.set('Palettes', []);
+            appController.savedPalettesData = [];
+        }
+    })();
 }]);
