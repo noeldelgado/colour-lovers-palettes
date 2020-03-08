@@ -2,13 +2,14 @@
   "name": "colour-lovers-palettes",
   "version": "1.0.0",
   "scripts": {
-    "start":  "gulp",
+    "start": "gulp",
     "build": "gulp build"
   },
   "license": "ISC",
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
+    "gulp-clean-css": "^4.2.0",
     "gulp-less": "^4.0.1",
     "gulp-livereload": "^4.0.2",
     "gulp-uglifyjs": "^0.6.2"

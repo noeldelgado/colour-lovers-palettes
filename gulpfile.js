@@ -2,6 +2,7 @@ var { src, dest, watch, parallel, series } = require('gulp'),
     less = require('gulp-less'),
     autoprefixer = require('gulp-autoprefixer'),
     uglify = require('gulp-uglifyjs'),
+    cleanCSS = require('gulp-clean-css'),
     livereload = require('gulp-livereload');
 
 var jsVendorFiles = [
@@ -17,14 +18,20 @@ var jsAppFiles= [
     'src/scripts/directives/**/*.js'
 ];
 
-function css(cb) {
+function css() {
     return src('src/stylesheets/app.less')
         .pipe(less())
         .pipe(autoprefixer('last 2 versions'))
         .pipe(dest('dist/'));
 };
 
-function jsDev(cb) {
+function cssDist() {
+    return src('dist/app.css')
+        .pipe(cleanCSS())
+        .pipe(dest('dist/'));
+}
+
+function jsDev() {
     return src(jsAppFiles)
         .pipe(uglify('app.js', {
             mangle : false,
@@ -38,7 +45,7 @@ function jsDev(cb) {
         .pipe(dest('dist/'));
 }
 
-function jsDist(cb) {
+function jsDist() {
     return src(jsAppFiles)
         .pipe(uglify('app.js', {
             mangle : false
@@ -46,7 +53,7 @@ function jsDist(cb) {
         .pipe(dest('dist/'));
 }
 
-function jsVendor(cb) {
+function jsVendor() {
     return src(jsVendorFiles)
         .pipe(uglify('vendors.js'))
         .pipe(dest('dist/'));
@@ -60,6 +67,6 @@ function watchFn() {
     watch('dist/**').on('change', livereload.changed);
 }
 
-exports.build = series(css, jsVendor, jsDist);
+exports.build = series(css, cssDist, jsVendor, jsDist);
 exports.watch = watchFn;
 exports.default = series(parallel(css, jsVendor, jsDev), watchFn);
