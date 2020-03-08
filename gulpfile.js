@@ -1,4 +1,4 @@
-var gulp = require('gulp'),
+var { src, dest, watch, parallel, series } = require('gulp'),
     less = require('gulp-less'),
     autoprefixer = require('gulp-autoprefixer'),
     uglify = require('gulp-uglifyjs'),
@@ -17,15 +17,15 @@ var jsAppFiles= [
     'src/scripts/directives/**/*.js'
 ];
 
-gulp.task('less', function() {
-    gulp.src('src/stylesheets/app.less')
+function css(cb) {
+    return src('src/stylesheets/app.less')
         .pipe(less())
         .pipe(autoprefixer('last 2 versions'))
-        .pipe(gulp.dest('dist/'));
-});
+        .pipe(dest('dist/'));
+};
 
-gulp.task('js:dev', function() {
-    gulp.src(jsAppFiles)
+function jsDev(cb) {
+    return src(jsAppFiles)
         .pipe(uglify('app.js', {
             mangle : false,
             output : {
@@ -35,31 +35,31 @@ gulp.task('js:dev', function() {
                 drop_debugger : false
             }
         }))
-        .pipe(gulp.dest('dist/'));
-});
+        .pipe(dest('dist/'));
+}
 
-gulp.task('js:dist', function() {
-    gulp.src(jsAppFiles)
+function jsDist(cb) {
+    return src(jsAppFiles)
         .pipe(uglify('app.js', {
             mangle : false
         }))
-        .pipe(gulp.dest('dist/'));
-});
+        .pipe(dest('dist/'));
+}
 
-gulp.task('js:vendor', function() {
-    gulp.src(jsVendorFiles)
+function jsVendor(cb) {
+    return src(jsVendorFiles)
         .pipe(uglify('vendors.js'))
-        .pipe(gulp.dest('dist/'));
-});
+        .pipe(dest('dist/'));
+}
 
-gulp.task('watch', function() {
+function watchFn() {
     livereload.listen();
-    gulp.watch(['src/stylesheets/**', 'src/scripts/directives/**/*.less'], ['less']);
-    gulp.watch('src/scripts/**/*.js', ['js:dev']);
-    gulp.watch('**/*.html').on('change', livereload.changed);
-    gulp.watch('dist/**').on('change', livereload.changed);
-});
+    watch(['src/stylesheets/**', 'src/scripts/directives/**/*.less'], css);
+    watch('src/scripts/**/*.js', jsDev);
+    watch('**/*.html').on('change', livereload.changed);
+    watch('dist/**').on('change', livereload.changed);
+}
 
-gulp.task('default', ['dev', 'watch']);
-gulp.task('dev', ['less', 'js:vendor', 'js:dev']);
-gulp.task('dist', ['less', 'js:vendor', 'js:dist']);
+exports.build = series(css, jsVendor, jsDist);
+exports.watch = watchFn;
+exports.default = series(parallel(css, jsVendor, jsDev), watchFn);
