@@ -5,7 +5,8 @@
   ul {
     flex: 1 100%;
     display: flex;
-    flex-flow: row wrap;
+    flex-direction: row;
+    flex-wrap: wrap;
     padding: 0;
     margin: 0;
     list-style: none;
@@ -17,7 +18,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    transition: all 400ms @ease-in-out-back;
+    transition: flex 300ms @ease;
 
     &:hover {
       flex: 2;
@@ -51,12 +52,10 @@
     }
   }
 
-  @media all and (max-width: 700px) {
+  @media all and (max-width: 900px) {
     ul {
-      flex-flow: column wrap;
-    }
-    li {
-      flex: 1 100%;
+      flex-direction: column;
+      flex-wrap: wrap;
     }
   }
 }
