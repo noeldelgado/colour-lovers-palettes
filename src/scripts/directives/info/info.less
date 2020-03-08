@@ -1,7 +1,7 @@
 .section-info {
   font-size: .85em;
   position: absolute;
-  bottom: 0%;
+  top: 0;
   left: 1em;
   right: 1em;
   padding: 1em;
@@ -9,10 +9,11 @@
   color: #fff;
   border-radius: .35em .35em 0 0;
   box-shadow: 0 0 0 .2em rgba(0,0,0,.1);
-  transition: bottom 500ms @ease-out-expo;
+  transform: translateY(10px);
+  transition: transform 500ms @ease-out-expo;
 
   &.active {
-    bottom: 100%;
+    transform: translateY(-100%);
   }
 }
 
