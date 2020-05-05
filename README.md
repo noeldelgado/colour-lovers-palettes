@@ -1,5 +1,6 @@
 ## Random ColourLovers Palettes
 
+[![Known Vulnerabilities](https://snyk.io/test/github/noeldelgado/colour-lovers-palettes/badge.svg)](https://snyk.io/test/github/noeldelgado/colour-lovers-palettes)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/noeldelgado/colour-lovers-palettes.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/noeldelgado/colour-lovers-palettes/alerts/)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/noeldelgado/colour-lovers-palettes.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/noeldelgado/colour-lovers-palettes/context:javascript)
 
