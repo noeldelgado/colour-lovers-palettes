@@ -5,7 +5,7 @@
     "start": "gulp",
     "build": "gulp build"
   },
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
