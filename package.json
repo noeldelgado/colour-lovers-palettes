@@ -1,6 +1,6 @@
 {
   "name": "colour-lovers-palettes",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "start": "gulp",
     "build": "gulp build"
