@@ -1,11 +1,11 @@
 {
   "name": "colour-lovers-palettes",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "start": "gulp",
     "build": "gulp build"
   },
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
